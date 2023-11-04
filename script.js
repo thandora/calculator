@@ -16,7 +16,7 @@ function divide(a, b) {
 }
 
 function operate(a, b, operator) {
-  operator(a, b);
+  return operator(a, b);
 }
 
 // Operand variables
