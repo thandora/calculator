@@ -14,6 +14,17 @@ html {
   background-color: blueviolet;
 }
 
+.display-input {
+  height: 24px;
+  background-color: aquamarine;
+}
+
+.display-result {
+  background-color: bisque;
+  height: 24px;
+  text-align: right;
+}
+
 .buttons-container {
   background-color: burlywood;
   height: 450px;
