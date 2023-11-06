@@ -16,7 +16,7 @@ function divide(a, b) {
 }
 
 function operate(a, b, operator) {
-  return operator(a, b);
+  return roundIfLong(operator(a, b), 3);
 }
 
 // Display function
@@ -82,6 +82,33 @@ function areOperandsValid() {
   return operandA !== undefined && operandB !== undefined;
 }
 
+function countOccurrences(str, char) {
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === char) {
+      count++;
+    }
+  }
+  return count;
+}
+
+function checkIfIn(myString, substrings) {
+  for (let substring of substrings) {
+    if (myString.includes(substring)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function roundIfLong(num, maxDecimals) {
+  const numDecimals = num.toString().split(".")[1];
+  if (numDecimals && numDecimals.length > maxDecimals) {
+    return num.toFixed(maxDecimals);
+  }
+  return num;
+}
+
 // Screen display
 const dispInput = document.querySelector(".display-input");
 const dispResult = document.querySelector(".display-result");
@@ -111,6 +138,21 @@ for (const btnDigit of btnsDigit) {
   });
 }
 
+const btnDecimalPoint = document.querySelector(".decimal-point");
+btnDecimalPoint.addEventListener("click", () => {
+  let lastChar = dispInput.textContent.slice(-1);
+  if (lastChar !== ".") {
+    if (countOccurrences(dispInput.textContent, ".") < 1) {
+      dispInput.textContent += btnDecimalPoint.value;
+    } else if (
+      countOccurrences(dispInput.textContent, ".") < 2 &&
+      checkIfIn(dispInput.textContent, ["+", "-", "*", "/"])
+    ) {
+      dispInput.textContent += btnDecimalPoint.value;
+    }
+  }
+});
+
 const btnsOperator = document.querySelectorAll(".operator");
 for (const btn of btnsOperator) {
   btn.addEventListener("click", () => {
@@ -135,8 +177,8 @@ const btnAllClear = document.querySelector(".all-clear");
 btnAllClear.addEventListener("click", () => {
   dispInput.textContent = "";
   dispResult.textContent = "";
-  operandA = "";
-  operandB = "";
+  operandA = undefined;
+  operandB = undefined;
 });
 
 const btnClear = document.querySelector(".clear-current");
