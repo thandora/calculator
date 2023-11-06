@@ -37,11 +37,13 @@ function decodeInput(textDisplay) {
     operands.push(textDisplay);
   }
 
-  console.log(operands);
   for (let i in operands) {
-    operands[i] = +operands[i];
+    if (operands[i] === "") {
+      operands[i] = undefined;
+    } else {
+      operands[i] = +operands[i];
+    }
   }
-  console.log(operands);
 
   operandA = operands[0];
   if (operands.length > 1) {
@@ -64,6 +66,20 @@ function clearCurrent(textDisplay) {
   }
 
   return messageParts.join("");
+}
+
+// Helper functions
+function isFinalCharOperator(text) {
+  const finalChar = text.slice(-1);
+  return "+-*/".includes(finalChar);
+}
+
+function replaceFinalChar(text, r) {
+  return text.slice(0, -1) + r;
+}
+
+function areOperandsValid() {
+  return operandA !== undefined && operandB !== undefined;
 }
 
 // Screen display
@@ -96,9 +112,22 @@ for (const btnDigit of btnsDigit) {
 }
 
 const btnsOperator = document.querySelectorAll(".operator");
-for (const btnOperator of btnsOperator) {
-  btnOperator.addEventListener("click", () => {
-    dispInput.textContent += btnOperator.value;
+for (const btn of btnsOperator) {
+  btn.addEventListener("click", () => {
+    let currentText = dispInput.textContent;
+
+    if (isFinalCharOperator(currentText)) {
+      dispInput.textContent = replaceFinalChar(currentText, btn.value);
+    } else {
+      decodeInput(dispInput.textContent);
+      dispInput.textContent += btn.value;
+    }
+
+    if (areOperandsValid()) {
+      let result = operate(operandA, operandB, operator);
+      dispInput.textContent = `${result}${btn.value}`;
+      dispResult.textContent = result;
+    }
   });
 }
 
@@ -108,7 +137,6 @@ btnAllClear.addEventListener("click", () => {
   dispResult.textContent = "";
   operandA = "";
   operandB = "";
-  operator = undefined;
 });
 
 const btnClear = document.querySelector(".clear-current");
