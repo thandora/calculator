@@ -49,6 +49,23 @@ function decodeInput(textDisplay) {
   }
 }
 
+function clearCurrent(textDisplay) {
+  let messageParts = [];
+
+  if (textDisplay.match(/[+\-*\/]/) !== null) {
+    operatorSymbol = textDisplay.match(/[+\-*\/]/)[0];
+    messageParts = textDisplay.split(operatorSymbol);
+    messageParts.pop();
+
+    // Checks if last character is NOT an operator.
+    if (!"+-*/".includes(textDisplay.slice(-1))) {
+      messageParts.push(operatorSymbol);
+    }
+  }
+
+  return messageParts.join("");
+}
+
 // Screen display
 const dispInput = document.querySelector(".display-input");
 const dispResult = document.querySelector(".display-result");
@@ -84,3 +101,17 @@ for (const btnOperator of btnsOperator) {
     dispInput.textContent += btnOperator.value;
   });
 }
+
+const btnAllClear = document.querySelector(".all-clear");
+btnAllClear.addEventListener("click", () => {
+  dispInput.textContent = "";
+  dispResult.textContent = "";
+  operandA = "";
+  operandB = "";
+  operator = undefined;
+});
+
+const btnClear = document.querySelector(".clear-current");
+btnClear.addEventListener("click", () => {
+  dispInput.textContent = clearCurrent(dispInput.textContent);
+});
