@@ -8,37 +8,55 @@ html {
   box-sizing: inherit;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.calc {
+  background-color: rgb(34, 40, 49);
+  border-radius: 18px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  padding: 20px 24px;
+}
+
 .display-main {
-  width: 362px;
-  height: 48px;
-  background-color: blueviolet;
+  background-color: rgb(117, 134, 112);
+  border-radius: 6px;
+  color: rgb(34, 40, 49);
+  font-size: 32px;
+  height: 100px;
+  padding: 8px 24px;
 }
 
 .display-input {
-  height: 24px;
-  background-color: aquamarine;
+  height: 42px;
 }
 
 .display-result {
-  background-color: bisque;
-  height: 24px;
+  height: 42px;
   text-align: right;
 }
 
 .buttons-container {
-  background-color: burlywood;
-  height: 450px;
-  width: 362px;
+  padding: 18px 0;
+  height: 200px;
+  width: 350px;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 3px;
+  justify-content: space-between;
+  gap: 5px;
 }
 
 .buttons-container button {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   flex-shrink: 0;
-  flex-basis: calc(20% - 3px);
-  height: 50px;
+  flex-basis: calc(19% - 3px);
+  height: 42px;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .operator-func.equal {
