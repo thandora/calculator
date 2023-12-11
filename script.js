@@ -185,3 +185,10 @@ const btnClear = document.querySelector(".clear-current");
 btnClear.addEventListener("click", () => {
   dispInput.textContent = clearCurrent(dispInput.textContent);
 });
+
+const btnBackspace = document.querySelector(".backspace");
+btnBackspace.addEventListener("click", () => {
+  if (dispInput.textContent.length > 0) {
+    dispInput.textContent = dispInput.textContent.slice(0, -1);
+  }
+});
